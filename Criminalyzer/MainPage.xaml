@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    
+
     <Page.DataContext>
         <local:MainViewModel/>
     </Page.DataContext>
@@ -25,7 +25,21 @@
         </StackPanel>
 
         <Button Grid.Row="2" Command="{Binding TakePictureCommand}">Take Picture</Button>
-        
-        <!--<ItemsControl Grid.Row="1" ItemsSource="{Binding AllCriminals}" />-->
+
+        <ListView Grid.Row="1" ItemsSource="{Binding Records}">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Image Source="{Binding mugshot}" Width="150" Height="150"/>
+                        <TextBlock Text="{Binding name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

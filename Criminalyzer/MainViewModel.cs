@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -23,7 +24,7 @@ namespace Criminalyzer
 
         public RelayCommand TakePictureCommand { get { return new RelayCommand(OnTakePicture); } }
 
-        public ObservableCollection<Record> Records = new ObservableCollection<Record>();
+        public ObservableCollection<Record> Records { get; private set; } = new ObservableCollection<Record>();
 
         public BitmapImage CapturedImage { get; private set; }
 
@@ -59,7 +60,18 @@ namespace Criminalyzer
                 CapturedGender = face.Attributes.Gender;
             }
 
+            await LoadMugshots();
+        }
 
+        private async Task LoadMugshots()
+        {
+            var jailbase = await JailbaseService.GetMugshots();
+            Debug.WriteLine(jailbase.records.Count);
+
+            foreach(var record in jailbase.records)
+            {
+                Records.Add(record);
+            }
         }
 
         private async Task<BitmapImage> LoadImage(StorageFile file)

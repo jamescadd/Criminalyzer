@@ -113,6 +113,7 @@
     <Compile Include="Contract\TrainingStatus.cs" />
     <Compile Include="Contract\VerifyResult.cs" />
     <Compile Include="FaceClientService.cs" />
+    <Compile Include="JailbaseService.cs" />
     <Compile Include="JsonTypes.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
