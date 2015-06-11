@@ -17,8 +17,12 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
-        <Image Width="300" Height="300" Source="{Binding CapturedImage}"/>
+
+        <StackPanel Orientation="Vertical">
+            <Image Width="300" Height="300" Source="{Binding CapturedImage}"/>
+            <TextBlock Text="{Binding CapturedAge}"/>
+            <TextBlock Text="{Binding CapturedGender}"/>
+        </StackPanel>
 
         <Button Grid.Row="2" Command="{Binding TakePictureCommand}">Take Picture</Button>
     </Grid>

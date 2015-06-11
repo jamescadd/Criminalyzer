@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,9 +26,15 @@ namespace Criminalyzer
 
         public BitmapImage CapturedImage { get; private set; }
 
+        public string CapturedAge { get; private set; }
+
+        public string CapturedGender { get; private set; }
+
+        private FaceServiceClient _faceService;
+
         public MainViewModel()
         {
-
+            _faceService = new FaceServiceClient("9b9e6f57f27a4ce9b949c3a22dee8630");
         }
 
         protected void OnGetMugshots()
@@ -64,7 +71,21 @@ namespace Criminalyzer
                     bitmapImage.SetSource(fileStream);
                 }
 
+                using (var stream = await file.OpenAsync(FileAccessMode.Read))
+                {
+                    var faceResult = await _faceService.DetectAsync(stream.AsStream());
+                    var face = faceResult.FirstOrDefault();
+
+                    if (face != null)
+                    {
+                        CapturedAge = face.Attributes.Age.ToString();
+                        CapturedGender = face.Attributes.Gender;
+                    }
+                }
+
                 CapturedImage = bitmapImage;
+
+                // Oxford face detection
             }
             else
             {
