@@ -94,6 +94,25 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ClientError.cs" />
+    <Compile Include="ClientException.cs" />
+    <Compile Include="Contract\Candidate.cs" />
+    <Compile Include="Contract\CreatePersonResult.cs" />
+    <Compile Include="Contract\Face.cs" />
+    <Compile Include="Contract\FaceAttribute.cs" />
+    <Compile Include="Contract\FaceLandmarks.cs" />
+    <Compile Include="Contract\FaceRectangle.cs" />
+    <Compile Include="Contract\FeatureCoordinate.cs" />
+    <Compile Include="Contract\GroupResult.cs" />
+    <Compile Include="Contract\HeadPose.cs" />
+    <Compile Include="Contract\IdentifyResult.cs" />
+    <Compile Include="Contract\Person.cs" />
+    <Compile Include="Contract\PersonFace.cs" />
+    <Compile Include="Contract\PersonGroup.cs" />
+    <Compile Include="Contract\SimilarFace.cs" />
+    <Compile Include="Contract\TrainingStatus.cs" />
+    <Compile Include="Contract\VerifyResult.cs" />
+    <Compile Include="FaceClientService.cs" />
     <Compile Include="JsonTypes.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -157,6 +176,10 @@
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\netcore45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PropertyChanged, Version=1.50.1.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\packages\PropertyChanged.Fody.1.50.1\Lib\portable-net4+sl4+wp8+win8+wpa81+MonoAndroid16+MonoTouch40\PropertyChanged.dll</HintPath>
       <Private>True</Private>
@@ -169,6 +192,11 @@
       <HintPath>..\packages\System.Numerics.Vectors.4.0.0\lib\win8\System.Numerics.Vectors.WindowsRuntime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="Windows Desktop, Version=10.0.10030.0">
+      <Name>Windows Desktop Extension SDK</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
