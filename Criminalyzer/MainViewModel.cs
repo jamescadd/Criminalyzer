@@ -73,7 +73,7 @@ namespace Criminalyzer
 
                 using (var stream = await file.OpenAsync(FileAccessMode.Read))
                 {
-                    var faceResult = await _faceService.DetectAsync(stream.AsStream());
+                    var faceResult = await _faceService.DetectAsync(stream.AsStream(), analyzesAge:true, analyzesGender: true);
                     var face = faceResult.FirstOrDefault();
 
                     if (face != null)

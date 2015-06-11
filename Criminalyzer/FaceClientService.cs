@@ -7,6 +7,7 @@
 namespace Criminalyzer
 {
     using System;
+    using System.Diagnostics;
     using System.Dynamic;
     using System.IO;
     using System.Net;
@@ -680,6 +681,7 @@ namespace Criminalyzer
             using (StreamReader reader = new StreamReader(stream))
             {
                 message = reader.ReadToEnd();
+                Debug.WriteLine(message);
             }
 
             JsonSerializerSettings settings = new JsonSerializerSettings();
