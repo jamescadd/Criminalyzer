@@ -15,6 +15,12 @@ namespace Microsoft.ProjectOxford.Face
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
+    public class SimilarFaceParamters
+    {
+        public Guid faceId { get; set; }
+        public Guid[] faceIds { get; set; }
+    }
+
     /// <summary>
     /// The face service client proxy implementation.
     /// </summary>
@@ -472,11 +478,14 @@ namespace Microsoft.ProjectOxford.Face
             var requestUrl = string.Format("{0}/findsimilars?{1}={2}", ServiceHost, SubscriptionKeyName, this.subscriptionKey);
             var request = WebRequest.Create(requestUrl);
 
-            dynamic requestBody = new ExpandoObject();
-            requestBody.faceId = faceId;
-            requestBody.faceIds = faceIds;
+            //dynamic requestBody = new ExpandoObject();
+            //requestBody.faceId = faceId;
+            //requestBody.faceIds = faceIds;
 
-            return await this.SendAsync<ExpandoObject, SimilarFace[]>("POST", requestBody, request);
+            SimilarFaceParamters p = new SimilarFaceParamters { faceId = faceId, faceIds = faceIds };
+            
+
+            return await this.SendAsync<SimilarFaceParamters, SimilarFace[]>("POST", p, request);
         }
 
         /// <summary>

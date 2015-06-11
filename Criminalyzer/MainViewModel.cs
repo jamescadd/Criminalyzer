@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Command;
@@ -38,6 +39,10 @@ namespace Criminalyzer
         public string CapturedGender { get; private set; }
 
         private FaceServiceClient _faceService;
+
+        public Face MostSimilarFace { get; private set; }
+
+        public Record MostSimilarRecord { get; private set; }
 
         public MainViewModel()
         {
@@ -84,9 +89,13 @@ namespace Criminalyzer
 
             await LoadMugshots();
 
+            HttpClient client = new HttpClient();
+
             foreach(var record in Records)
             {
-                var recordFaces = await _faceService.DetectAsync(record.mugshot);
+                var mugshot = await client.GetStreamAsync(record.mugshot);
+
+                var recordFaces = await _faceService.DetectAsync(mugshot);
                 var recordFace = recordFaces.FirstOrDefault();
                 if (recordFace != null)
                 {
@@ -96,15 +105,14 @@ namespace Criminalyzer
             }
 
             // Find similar.
-            var similar = await _faceService.FindSimilarAsync(CapturedFace.FaceId, RecordFaces.Select(f => f.FaceId).ToArray());
-            var mostSimilar = similar.FirstOrDefault();
+            //var similar = await _faceService.FindSimilarAsync(CapturedFace.FaceId, RecordFaces.Select(f => f.FaceId).ToArray());
+            //var mostSimilar = similar.FirstOrDefault();
 
-            var mostSimilarFace = RecordFaces.Where(f => f.FaceId == mostSimilar.FaceId).FirstOrDefault();
+            //var mostSimilarFace = RecordFaces.Where(f => f.FaceId == mostSimilar.FaceId).FirstOrDefault();
 
-            if (mostSimilarFace != null)
-            {
-                Debug.WriteLine("Most similar: " + ((Record)mostSimilarFace.Tag).name);
-            }
+            MostSimilarFace = RecordFaces.First();
+            MostSimilarRecord = Records.First();
+
         }
 
         private async Task LoadMugshots()
