@@ -25,5 +25,7 @@
         </StackPanel>
 
         <Button Grid.Row="2" Command="{Binding TakePictureCommand}">Take Picture</Button>
+        
+        <!--<ItemsControl Grid.Row="1" ItemsSource="{Binding AllCriminals}" />-->
     </Grid>
 </Page>

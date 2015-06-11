@@ -43,7 +43,7 @@ namespace Criminalyzer
 
         }
 
-        protected async Task OnTakePicture()
+        protected async void OnTakePicture()
         {
             var file = await GetPicture();
             if (file == null)
