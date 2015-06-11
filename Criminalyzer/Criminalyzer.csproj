@@ -94,25 +94,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ClientError.cs" />
-    <Compile Include="ClientException.cs" />
-    <Compile Include="Contract\Candidate.cs" />
-    <Compile Include="Contract\CreatePersonResult.cs" />
-    <Compile Include="Contract\Face.cs" />
-    <Compile Include="Contract\FaceAttribute.cs" />
-    <Compile Include="Contract\FaceLandmarks.cs" />
-    <Compile Include="Contract\FaceRectangle.cs" />
-    <Compile Include="Contract\FeatureCoordinate.cs" />
-    <Compile Include="Contract\GroupResult.cs" />
-    <Compile Include="Contract\HeadPose.cs" />
-    <Compile Include="Contract\IdentifyResult.cs" />
-    <Compile Include="Contract\Person.cs" />
-    <Compile Include="Contract\PersonFace.cs" />
-    <Compile Include="Contract\PersonGroup.cs" />
-    <Compile Include="Contract\SimilarFace.cs" />
-    <Compile Include="Contract\TrainingStatus.cs" />
-    <Compile Include="Contract\VerifyResult.cs" />
-    <Compile Include="FaceClientService.cs" />
     <Compile Include="JailbaseService.cs" />
     <Compile Include="JsonTypes.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -193,6 +174,12 @@
       <HintPath>..\packages\System.Numerics.Vectors.4.0.0\lib\win8\System.Numerics.Vectors.WindowsRuntime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ClientLibrary\ClientLibrary.csproj">
+      <Project>{25d58ba5-660f-407b-803c-22b4547c09dc}</Project>
+      <Name>ClientLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

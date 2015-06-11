@@ -4,10 +4,9 @@
 //
 // *********************************************************
 
-namespace Criminalyzer
+namespace Microsoft.ProjectOxford.Face
 {
     using System;
-    using System.Diagnostics;
     using System.Dynamic;
     using System.IO;
     using System.Net;
@@ -16,11 +15,10 @@ namespace Criminalyzer
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
-
     /// <summary>
     /// The face service client proxy implementation.
     /// </summary>
-    public class FaceServiceClient
+    public class FaceServiceClient : IFaceServiceClient
     {
         #region private members
 
@@ -117,8 +115,6 @@ namespace Criminalyzer
 
             dynamic requestBody = new ExpandoObject();
             requestBody.url = url;
-
-            //WebRequest.CreateHttp()
 
             return await this.SendAsync<ExpandoObject, Face[]>("POST", requestBody, request);
         }
@@ -683,7 +679,6 @@ namespace Criminalyzer
             using (StreamReader reader = new StreamReader(stream))
             {
                 message = reader.ReadToEnd();
-                Debug.WriteLine(message);
             }
 
             JsonSerializerSettings settings = new JsonSerializerSettings();

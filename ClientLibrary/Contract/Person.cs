@@ -7,46 +7,42 @@
 namespace Microsoft.ProjectOxford.Face.Contract
 {
     using System;
-    using Criminalyzer;
-
 
     /// <summary>
-    /// The detected face entity.
+    /// The person entity.
     /// </summary>
-    public class Face
+    public class Person
     {
         /// <summary>
-        /// Gets or sets the face identifier.
+        /// Gets or sets the person identifier.
         /// </summary>
         /// <value>
-        /// The face identifier.
+        /// The person identifier.
         /// </value>
-        public Guid FaceId { get; set; }
-
-        public Record Record { get; set; }
+        public Guid PersonId { get; set; }
 
         /// <summary>
-        /// Gets or sets the face rectangle.
+        /// Gets or sets the face ids.
         /// </summary>
         /// <value>
-        /// The face rectangle.
+        /// The face ids.
         /// </value>
-        public FaceRectangle FaceRectangle { get; set; }
+        public Guid[] FaceIds { get; set; }
 
         /// <summary>
-        /// Gets or sets the face landmarks.
+        /// Gets or sets the name.
         /// </summary>
         /// <value>
-        /// The face landmarks.
+        /// The name of the person.
         /// </value>
-        public FaceLandmarks FaceLandmarks { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the attributes.
+        /// Gets or sets the profile.
         /// </summary>
         /// <value>
-        /// The attributes.
+        /// The profile.
         /// </value>
-        public FaceAttribute Attributes { get; set; }
+        public string UserData { get; set; }
     }
 }

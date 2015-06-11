@@ -7,8 +7,6 @@
 namespace Microsoft.ProjectOxford.Face.Contract
 {
     using System;
-    using Criminalyzer;
-
 
     /// <summary>
     /// The detected face entity.
@@ -22,8 +20,6 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// The face identifier.
         /// </value>
         public Guid FaceId { get; set; }
-
-        public Record Record { get; set; }
 
         /// <summary>
         /// Gets or sets the face rectangle.
@@ -48,5 +44,7 @@ namespace Microsoft.ProjectOxford.Face.Contract
         /// The attributes.
         /// </value>
         public FaceAttribute Attributes { get; set; }
+
+        public object Tag { get; set; }
     }
 }

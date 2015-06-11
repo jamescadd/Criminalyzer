@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Command;
+using Microsoft.ProjectOxford.Face;
 using Microsoft.ProjectOxford.Face.Contract;
 using PropertyChanged;
 using Windows.Media.Capture;
@@ -26,7 +27,11 @@ namespace Criminalyzer
 
         public ObservableCollection<Record> Records { get; private set; } = new ObservableCollection<Record>();
 
+        public ObservableCollection<Face> RecordFaces { get; private set; } = new ObservableCollection<Face>();
+
         public BitmapImage CapturedImage { get; private set; }
+
+        public Face CapturedFace { get; private set; }
 
         public string CapturedAge { get; private set; }
 
@@ -74,9 +79,32 @@ namespace Criminalyzer
             {
                 CapturedAge = face.Attributes.Age.ToString();
                 CapturedGender = face.Attributes.Gender;
+                CapturedFace = face;
             }
 
             await LoadMugshots();
+
+            foreach(var record in Records)
+            {
+                var recordFaces = await _faceService.DetectAsync(record.mugshot);
+                var recordFace = recordFaces.FirstOrDefault();
+                if (recordFace != null)
+                {
+                    recordFace.Tag = record;
+                    RecordFaces.Add(recordFace);
+                }
+            }
+
+            // Find similar.
+            var similar = await _faceService.FindSimilarAsync(CapturedFace.FaceId, RecordFaces.Select(f => f.FaceId).ToArray());
+            var mostSimilar = similar.FirstOrDefault();
+
+            var mostSimilarFace = RecordFaces.Where(f => f.FaceId == mostSimilar.FaceId).FirstOrDefault();
+
+            if (mostSimilarFace != null)
+            {
+                Debug.WriteLine("Most similar: " + ((Record)mostSimilarFace.Tag).name);
+            }
         }
 
         private async Task LoadMugshots()
