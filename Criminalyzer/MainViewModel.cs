@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Command;
+using Microsoft.ProjectOxford.Face.Contract;
 using PropertyChanged;
 using Windows.Media.Capture;
 using Windows.Storage;
@@ -42,17 +43,47 @@ namespace Criminalyzer
 
         }
 
-        protected async void OnTakePicture()
+        protected async Task OnTakePicture()
         {
-            //CameraCaptureUI dialog = new CameraCaptureUI();
-            //var photo = await dialog.CaptureFileAsync(CameraCaptureUIMode.Photo);
+            var file = await GetPicture();
+            if (file == null)
+                return;
 
-            //if (photo == null)
-            //{
-            //    return;
-            //}
+            CapturedImage = await LoadImage(file);
+            var faces = await GetFaces(file);
+            var face = faces.FirstOrDefault();
+
+            if (face != null)
+            {
+                CapturedAge = face.Attributes.Age.ToString();
+                CapturedGender = face.Attributes.Gender;
+            }
 
 
+        }
+
+        private async Task<BitmapImage> LoadImage(StorageFile file)
+        {
+            BitmapImage bitmapImage = new BitmapImage();
+            using (IRandomAccessStream fileStream = await file.OpenAsync(FileAccessMode.Read))
+            {
+                bitmapImage.SetSource(fileStream);
+            }
+
+            return bitmapImage;
+        }
+
+        private async Task<Face[]> GetFaces(StorageFile file)
+        {
+            using (var stream = await file.OpenAsync(FileAccessMode.Read))
+            {
+                var faceResult = await _faceService.DetectAsync(stream.AsStream(), analyzesAge: true, analyzesGender: true);
+                return faceResult;
+            }
+        }
+
+        private async Task<StorageFile> GetPicture()
+        {
             FileOpenPicker openPicker = new FileOpenPicker();
             openPicker.ViewMode = PickerViewMode.Thumbnail;
             openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
@@ -61,38 +92,15 @@ namespace Criminalyzer
             openPicker.FileTypeFilter.Add(".png");
 
             StorageFile file = await openPicker.PickSingleFileAsync();
-            if (file != null)
-            {
-                // Application now has read/write access to the picked file
-                //OutputTextBlock.Text = "Picked photo: " + file.Name;
-                BitmapImage bitmapImage = new BitmapImage();
-                using (IRandomAccessStream fileStream = await file.OpenAsync(FileAccessMode.Read))
-                {
-                    bitmapImage.SetSource(fileStream);
-                }
+            return file;
+            
+            //CameraCaptureUI dialog = new CameraCaptureUI();
+            //var photo = await dialog.CaptureFileAsync(CameraCaptureUIMode.Photo);
 
-                using (var stream = await file.OpenAsync(FileAccessMode.Read))
-                {
-                    var faceResult = await _faceService.DetectAsync(stream.AsStream(), analyzesAge:true, analyzesGender: true);
-                    var face = faceResult.FirstOrDefault();
-
-                    if (face != null)
-                    {
-                        CapturedAge = face.Attributes.Age.ToString();
-                        CapturedGender = face.Attributes.Gender;
-                    }
-                }
-
-                CapturedImage = bitmapImage;
-
-                // Oxford face detection
-            }
-            else
-            {
-                //OutputTextBlock.Text = "Operation cancelled.";
-            }
-
-
+            //if (photo == null)
+            //{
+            //    return;
+            //}
 
             //var picker = new Windows.Storage.Pickers.FileOpenPicker();
             //var photo = await picker.PickSingleFileAsync();
