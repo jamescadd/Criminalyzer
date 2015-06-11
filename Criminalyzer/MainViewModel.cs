@@ -36,6 +36,22 @@ namespace Criminalyzer
 
         public MainViewModel()
         {
+            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+            {
+                CapturedAge = "32";
+                CapturedGender = "Male";
+
+                BitmapImage image = new BitmapImage(new Uri("http://lorempixel.com/200/200/"));
+
+                Records.Add(new Record { mugshot = "http://lorempixel.com/200/200/", name = "FIRST LAST" });
+                Records.Add(new Record { mugshot = "http://lorempixel.com/200/200/", name = "FIRST LAST" });
+                Records.Add(new Record { mugshot = "http://lorempixel.com/200/200/", name = "FIRST LAST" });
+                Records.Add(new Record { mugshot = "http://lorempixel.com/200/200/", name = "FIRST LAST" });
+                Records.Add(new Record { mugshot = "http://lorempixel.com/200/200/", name = "FIRST LAST" });
+                Records.Add(new Record { mugshot = "http://lorempixel.com/200/200/", name = "FIRST LAST" });
+                Records.Add(new Record { mugshot = "http://lorempixel.com/200/200/", name = "FIRST LAST" });
+            }
+
             _faceService = new FaceServiceClient("9b9e6f57f27a4ce9b949c3a22dee8630");
         }
 
