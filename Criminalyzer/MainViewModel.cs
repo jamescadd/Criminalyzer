@@ -44,6 +44,8 @@ namespace Criminalyzer
 
         public Record MostSimilarRecord { get; private set; }
 
+        public string MostSimilarCharges { get; private set; }
+
         public MainViewModel()
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
@@ -95,7 +97,7 @@ namespace Criminalyzer
             {
                 var mugshot = await client.GetStreamAsync(record.mugshot);
 
-                var recordFaces = await _faceService.DetectAsync(mugshot);
+                var recordFaces = await _faceService.DetectAsync(mugshot, analyzesAge: true, analyzesGender: true);
                 var recordFace = recordFaces.FirstOrDefault();
                 if (recordFace != null)
                 {
@@ -112,6 +114,7 @@ namespace Criminalyzer
 
             MostSimilarFace = RecordFaces.First();
             MostSimilarRecord = Records.First();
+            MostSimilarCharges = MostSimilarRecord.charges.FirstOrDefault();
 
         }
 

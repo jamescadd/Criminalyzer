@@ -18,13 +18,23 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Vertical" Margin="-5,-5,5,5">
-            <Image Height="380" Source="{Binding CapturedImage}" Margin="145,0,1000,0" RenderTransformOrigin="0.117,0.533" HorizontalAlignment="Left"/>
-            <Image Source="https://dl.dropboxusercontent.com/u/96118/Criminalyzer-logo-black.png" Width="97" Margin="13,0,0,0" HorizontalAlignment="Left" Height="60" RenderTransformOrigin="0.494,0.433"/>
-            <TextBlock Text="Suspect Age" Margin="145,0,1176,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            <TextBlock  x:Name="Suspect_Age"  Text="{Binding CapturedAge}" Margin="145,0,1190,0" Width="105" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            <TextBlock Text="Suspect Gender" Margin="145,0,1158,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            <TextBlock  x:Name="Suspect_Gender" Text="{Binding CapturedGender}" Margin="145,0,1158,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Vertical" Background="Blue">
+                <Image Height="380" Source="{Binding CapturedImage}" HorizontalAlignment="Left"/>
+                <!--<Image Source="https://dl.dropboxusercontent.com/u/96118/Criminalyzer-logo-black.png" Width="97" Margin="13,0,0,0" HorizontalAlignment="Left" Height="60" RenderTransformOrigin="0.494,0.433"/>-->
+                <TextBlock Text="Suspect Age" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <TextBlock  x:Name="Suspect_Age"  Text="{Binding CapturedAge}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <TextBlock Text="Suspect Gender" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <TextBlock  x:Name="Suspect_Gender" Text="{Binding CapturedGender}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Margin="-5,-5,5,5" Background="Green">
+                <Image Height="380" Source="{Binding MostSimilarRecord.mugshot}"/>
+                <TextBlock Text="Suspect Age" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <TextBlock  Text="{Binding MostSimilarFace.Attributes.Age}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <TextBlock Text="Suspect Charges" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <TextBlock  Text="{Binding MostSimilarCharges}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            </StackPanel>
         </StackPanel>
 
         <Button Grid.Row="2" Command="{Binding TakePictureCommand}">Take Picture</Button>
