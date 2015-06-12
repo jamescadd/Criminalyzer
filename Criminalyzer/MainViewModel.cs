@@ -15,6 +15,7 @@ using Windows.Media.Capture;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace Criminalyzer
@@ -46,13 +47,17 @@ namespace Criminalyzer
 
         public string MostSimilarCharges { get; private set; }
 
+        public Visibility SuspectVisibility { get; private set; }
+
+        public Visibility MatchVisibility { get; private set; }
+
         public MainViewModel()
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
                 CapturedAge = "32";
                 CapturedGender = "Male";
-
+                
                 BitmapImage image = new BitmapImage(new Uri("http://lorempixel.com/200/200/"));
 
                 Records.Add(new Record { mugshot = "http://lorempixel.com/200/200/", name = "FIRST LAST" });
@@ -62,6 +67,11 @@ namespace Criminalyzer
                 Records.Add(new Record { mugshot = "http://lorempixel.com/200/200/", name = "FIRST LAST" });
                 Records.Add(new Record { mugshot = "http://lorempixel.com/200/200/", name = "FIRST LAST" });
                 Records.Add(new Record { mugshot = "http://lorempixel.com/200/200/", name = "FIRST LAST" });
+            }
+            else
+            {
+                SuspectVisibility = Visibility.Collapsed;
+                MatchVisibility = Visibility.Collapsed;
             }
 
             _faceService = new FaceServiceClient("9b9e6f57f27a4ce9b949c3a22dee8630");
@@ -87,6 +97,7 @@ namespace Criminalyzer
                 CapturedAge = face.Attributes.Age.ToString();
                 CapturedGender = face.Attributes.Gender;
                 CapturedFace = face;
+                SuspectVisibility = Visibility.Visible;
             }
 
             await LoadMugshots();
@@ -115,7 +126,7 @@ namespace Criminalyzer
             MostSimilarFace = RecordFaces.First();
             MostSimilarRecord = Records.First();
             MostSimilarCharges = MostSimilarRecord.charges.FirstOrDefault();
-
+            MatchVisibility = Visibility.Visible;
         }
 
         private async Task LoadMugshots()
