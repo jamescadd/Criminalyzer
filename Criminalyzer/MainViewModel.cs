@@ -74,7 +74,8 @@ namespace Criminalyzer
                 MatchVisibility = Visibility.Collapsed;
             }
 
-            _faceService = new FaceServiceClient("9b9e6f57f27a4ce9b949c3a22dee8630");
+            _faceService = new FaceServiceClient("bd76210f4ef94c6abefb41b7cc3a79a9");
+            //_faceService = new FaceServiceClient("9b9e6f57f27a4ce9b949c3a22dee8630");
         }
 
         protected void OnGetMugshots()

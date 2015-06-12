@@ -22,13 +22,23 @@
         <Image Source="https://dl.dropboxusercontent.com/u/96118/Criminalyzer-logo-black.png" Width="97" Margin="15" HorizontalAlignment="Left" Height="60"/>
 
         <StackPanel Orientation="Horizontal" Grid.Row="1">
-            <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Vertical" Margin="20,0,0,0">
                 <Image Height="380" Source="{Binding CapturedImage}" HorizontalAlignment="Left"/>
 
-                <TextBlock Visibility="{Binding SuspectVisibility}" Text="Suspect Age" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                <TextBlock Visibility="{Binding SuspectVisibility}"  x:Name="Suspect_Age"  Text="{Binding CapturedAge}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                <TextBlock Visibility="{Binding SuspectVisibility}" Text="Suspect Gender" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                <TextBlock Visibility="{Binding SuspectVisibility}"  x:Name="Suspect_Gender" Text="{Binding CapturedGender}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Visibility="{Binding SuspectVisibility}" Text="Suspect Age" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <TextBlock Visibility="{Binding SuspectVisibility}"  x:Name="Suspect_Age"  Text="{Binding CapturedAge}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <TextBlock Visibility="{Binding SuspectVisibility}" Text="Suspect Gender" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <TextBlock Visibility="{Binding SuspectVisibility}"  x:Name="Suspect_Gender" Text="{Binding CapturedGender}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                    
+                    <StackPanel Orientation="Vertical" Margin="30,0,0,0">
+                        <TextBlock Visibility="{Binding MatchVisibility}" FontSize="36" Text="LIKELY CHARGE"/>
+                        <TextBlock  Text="{Binding MostSimilarCharges}" FontSize="36" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </StackPanel>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Margin="100,0,0,0">
@@ -42,7 +52,7 @@
             </StackPanel>
         </StackPanel>
 
-        <Button Grid.Row="3" Command="{Binding TakePictureCommand}">Take Picture</Button>
+        <Button HorizontalAlignment="Center" Grid.Row="3" Command="{Binding TakePictureCommand}" Width="400" Height="50" Margin="10">Take Picture</Button>
 
         <ListView Grid.Row="2" ItemsSource="{Binding Records}">
             <ListView.ItemsPanel>
